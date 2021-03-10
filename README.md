@@ -3,7 +3,7 @@ ROT13 but you can change the amount
 
 ## Why was this made?
 
-(Yasahiro)[https://github.com/oliverbooth] challenged me to make a ROT13 but you can change the shift amount. So here it is.
+[Yasahiro](https://github.com/oliverbooth) challenged me to make a ROT13 but you can change the shift amount. So here it is.
 
 ## Installation
 
