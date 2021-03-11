@@ -14,54 +14,58 @@ namespace ROTX
             Console.ReadLine();
         }
 
-        public static string Shift(char toShift, int shiftAmount)
+        public static char Shift(char toShift, int shiftAmount)
         {
-            char[] alphabet = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
-            
-            int indexOf = Array.IndexOf( alphabet, Convert.ToChar( toShift.ToString().ToLower() ) );
-            char result = new char();
-            
-            while(shiftAmount >= 26)
-            {
-                shiftAmount -= 26;
-            }
+            if(shiftAmount == 0) { return toShift; }
+            if(toShift == ' ') { return ' '; }
 
-            if ((indexOf - shiftAmount) < 0)
+            string alphabet = "abcdefghijklmnopqrstuvwxyz";
+            
+            int indexOf = alphabet.IndexOf( Char.ToLower(toShift) );
+            char result;
+
+            shiftAmount %= 26;
+#if false
+            if ( (indexOf - shiftAmount) < 0)
             {
-                result = alphabet[indexOf - shiftAmount + 20];
-            }
+                result = alphabet[20 + (indexOf - shiftAmount) ];
+            } 
             else
             {
                 result = alphabet[indexOf - shiftAmount];
             }
-            if ( toShift.ToString() == toShift.ToString().ToUpper() )
-                return result.ToString().ToUpper();
+#endif
+
+            if( indexOf + shiftAmount < 26)
+            {
+                result = alphabet[indexOf + shiftAmount];
+            } 
             else
-                return result.ToString().ToLower();
+            {
+                result = alphabet[indexOf + shiftAmount - 26];
+            }
+
+            return char.IsUpper(toShift) ? char.ToUpper(result) : char.ToLower(result);
         }
 
         public static bool GameLoop()
         {
             Console.WriteLine("Input the string you would like to convert");
+            Console.WriteLine("abcdefghijklmnopqrstuvwxyz");
             char[] input = Console.ReadLine().ToCharArray();
 
             Console.WriteLine("Input the value you would like to shift your input by");
             shiftAmount = Convert.ToInt32( Console.ReadLine() );
 
 
-            string[] outputArr = new string[input.Length];
+            char[] outputArr = new char[input.Length];
             for (int i = 0; i < input.Length; i++)
             {
                 outputArr[i] = Shift(input[i], shiftAmount);
             }
             string output = String.Join("", outputArr);
             Console.WriteLine($"The output is: {output}");
-
-
-            /*foreach (string s in outputArr)
-            {
-                Console.Write($"{s}");
-            }*/
+            
             Console.WriteLine();
             Console.Write("Would you like to go again? (y/n): ");
             string goAgain = Console.ReadLine();
